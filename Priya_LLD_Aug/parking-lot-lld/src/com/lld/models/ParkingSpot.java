@@ -3,14 +3,17 @@ package com.lld.models;
 import com.lld.enums.VehicleType;
 
 public class ParkingSpot {
+
     private int spotNumber;
+    private VehicleType supportedVehicleType;
     private Vehicle parkedVehicle;
-    private VehicleType vehicleType;
 
+    public ParkingSpot(
+            int spotNumber,
+            VehicleType supportedVehicleType) {
 
-    public ParkingSpot(int spotNumber, VehicleType vehicleType) {
         this.spotNumber = spotNumber;
-        this.vehicleType = vehicleType;
+        this.supportedVehicleType = supportedVehicleType;
     }
 
     public boolean isAvailable() {
@@ -19,24 +22,32 @@ public class ParkingSpot {
 
     public boolean canPark(Vehicle vehicle) {
         return isAvailable()
-                && parkedVehicle.getType() == vehicleType;
+                && supportedVehicleType == vehicle.getType();
     }
 
     public void park(Vehicle vehicle) {
-        parkedVehicle = vehicle;
+        if (!canPark(vehicle)) {
+            throw new RuntimeException(
+                    "Vehicle cannot be parked in spot " + spotNumber
+            );
+        }
+
+        this.parkedVehicle = vehicle;
     }
 
     public void vacate() {
-        parkedVehicle = null;
+        this.parkedVehicle = null;
     }
 
     public int getSpotNumber() {
         return spotNumber;
     }
 
+    public VehicleType getSupportedVehicleType() {
+        return supportedVehicleType;
+    }
+
     public Vehicle getParkedVehicle() {
         return parkedVehicle;
     }
-
-
 }
