@@ -8,10 +8,7 @@ public class ParkingSpot {
     private VehicleType supportedVehicleType;
     private Vehicle parkedVehicle;
 
-    public ParkingSpot(
-            int spotNumber,
-            VehicleType supportedVehicleType) {
-
+    public ParkingSpot(int spotNumber, VehicleType supportedVehicleType) {
         this.spotNumber = spotNumber;
         this.supportedVehicleType = supportedVehicleType;
     }

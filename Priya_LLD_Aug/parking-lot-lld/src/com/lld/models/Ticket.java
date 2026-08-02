@@ -1,14 +1,13 @@
 package com.lld.models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Ticket {
 
-    private int ticketNumber;
-    private Vehicle vehicle;
-    private LocalDateTime entryTime;
-    private ParkingSpot parkingSpot;
+    private final int ticketNumber;
+    private final Vehicle vehicle;
+    private final LocalDateTime entryTime;
+    private final ParkingSpot parkingSpot;
 
     public Ticket(int ticketNumber, Vehicle vehicle,ParkingSpot parkingSpot) {
         this.ticketNumber = ticketNumber;

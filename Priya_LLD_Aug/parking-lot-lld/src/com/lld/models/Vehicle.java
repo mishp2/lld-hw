@@ -3,8 +3,8 @@ package com.lld.models;
 import com.lld.enums.VehicleType;
 
 public class Vehicle {
-    private String registrationNumber;
-    private VehicleType type;
+    private final String registrationNumber;
+    private final VehicleType type;
 
 
     public Vehicle(String registrationNumber, VehicleType type) {

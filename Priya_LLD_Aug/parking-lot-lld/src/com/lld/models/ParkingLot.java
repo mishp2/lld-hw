@@ -1,38 +1,22 @@
 package com.lld.models;
 
-import com.lld.services.FareCalculationStrategy;
-import com.lld.services.ParkingAllocationStrategy;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ParkingLot {
 
-    private List<ParkingFloor> floors;
-    private ParkingAllocationStrategy allocationStrategy;
-    private FareCalculationStrategy fareStrategy;
-    private int ticketCounter = 1;
+    private final String parkingLotId;
+    private final List<ParkingFloor> floors;
 
-    public ParkingLot(List<ParkingFloor> floors, ParkingAllocationStrategy allocationStrategy, FareCalculationStrategy fareStrategy) {
+    public ParkingLot(String parkingLotId, List<ParkingFloor> floors) {
         this.floors = floors;
-        this.allocationStrategy = allocationStrategy;
-        this.fareStrategy = fareStrategy;
+        this.parkingLotId = parkingLotId;
     }
 
-    public Ticket parkVehicle(Vehicle vehicle) {
-
-        ParkingSpot spot = allocationStrategy.findSpot(floors, vehicle);
-
-        if (spot == null) {
-            throw new RuntimeException("Parking lot is full");
-        }
-        spot.park(vehicle);
-        return new Ticket(ticketCounter++,vehicle, spot);
+    public String getParkingLotId() {
+        return parkingLotId;
     }
 
-    public double unparkVehicle(Ticket ticket) {
-        double fare = fareStrategy.calculateFare(ticket, LocalDateTime.now());
-        ticket.getParkingSpot().vacate();
-        return fare;
+    public List<ParkingFloor> getFloors() {
+        return floors;
     }
 }

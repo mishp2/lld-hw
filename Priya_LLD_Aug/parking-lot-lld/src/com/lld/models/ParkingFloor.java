@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ParkingFloor {
 
-    private int floor;
-    private List<ParkingSpot> parkingSpots;
+    private final int floor;
+    private final List<ParkingSpot> parkingSpots;
 
     public ParkingFloor(int floor, List<ParkingSpot> parkingSpots) {
         this.floor = floor;

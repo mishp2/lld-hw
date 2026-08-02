@@ -1,40 +1,33 @@
+import com.lld.display.DisplayBoard;
 import com.lld.enums.VehicleType;
 import com.lld.models.*;
+import com.lld.services.ParkingService;
 import com.lld.services.impl.HourlyFareCalculation;
 import com.lld.services.impl.NearestParkingAllocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        ParkingSpot bikeSpot =
-                new ParkingSpot(1, VehicleType.BIKE);
 
-        ParkingSpot carSpot =
-                new ParkingSpot(2, VehicleType.CAR);
+        ParkingSpot bikeSpot = new ParkingSpot(1, VehicleType.BIKE);
+        ParkingSpot carSpot = new ParkingSpot(2, VehicleType.CAR);
 
-        ParkingFloor groundFloor = new ParkingFloor(
-                        0, List.of(bikeSpot, carSpot));
+        ParkingFloor groundFloor = new ParkingFloor(1, List.of(bikeSpot, carSpot));
+        DisplayBoard displayBoard = new DisplayBoard();
+        ParkingLot parkingLot = new ParkingLot("PL-1",List.of(groundFloor));
 
-        ParkingLot parkingLot = new ParkingLot(List.of(groundFloor), new NearestParkingAllocation(), new HourlyFareCalculation(50));
-
-        Vehicle car =
-                new Vehicle(
-                        "DL-01-AB-1234",
-                        VehicleType.CAR
-                );
-
-        Ticket ticket = parkingLot.parkVehicle(car);
-
-        System.out.println(
-                "Allocated spot: "
-                        + ticket.getParkingSpot().getSpotNumber()
+        ParkingService parkingService = new ParkingService(
+                parkingLot,
+                new NearestParkingAllocation(),
+                new HourlyFareCalculation(50),
+                displayBoard
         );
-
-        double fare = parkingLot.unparkVehicle(ticket);
-
+        Vehicle car = new Vehicle("DL-01-AB-1234", VehicleType.BIKE);
+        Ticket ticket = parkingService.parkVehicle(car);
+        double fare = parkingService.unparkVehicle(ticket);
+        System.out.println("Allocated spot: " + ticket.getParkingSpot().getSpotNumber());
         System.out.println("Fare: " + fare);
     }
 }
